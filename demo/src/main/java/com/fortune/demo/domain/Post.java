@@ -1,6 +1,5 @@
 package com.fortune.demo.domain;
 
-
 import javax.persistence.*;
 
 @Entity

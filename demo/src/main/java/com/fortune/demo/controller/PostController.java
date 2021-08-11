@@ -1,6 +1,5 @@
 package com.fortune.demo.controller;
 
-
 import com.fortune.demo.controller.request.PostRequest;
 import com.fortune.demo.domain.Post;
 import com.fortune.demo.service.PostService;
@@ -22,4 +21,9 @@ public class PostController {
     public Post readPost(@RequestBody PostRequest postRequest) {
         return postService.writePost(postRequest);
     }
+
+    @DeleteMapping("delete/{id}")
+    public String deletePost(@PathVariable Long id) { return postService.deletePost(id);}
+
 }
+

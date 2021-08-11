@@ -26,4 +26,13 @@ public class PostService {
 
         return postRepository.save(post);
     }
+
+    public String deletePost(Long postId) {
+        String retstr = "Delete Fail";
+        if (postRepository.existsById(postId)) {
+            postRepository.deleteById(postId);
+            retstr = "Delete : " + postId;
+        }
+        return retstr;
+    }
 }
