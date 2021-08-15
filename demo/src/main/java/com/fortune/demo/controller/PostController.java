@@ -14,18 +14,16 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @GetMapping("get")
+    @GetMapping("post")
     public List<Post> readAllPost(){
         return postService.readAllPost();
     }
 
     @GetMapping("post/{id}")
-    public Post readPost(@PathVariable Long id){
-        return postService.readPost(id);
-    }
+    public Post readPost(@PathVariable Long id){ return postService.readPost(id); }
 
-    @PostMapping("post")
-    public Post readPost(@RequestBody PostRequest postRequest) {
+    @PostMapping("write")
+    public Post writePost(@RequestBody PostRequest postRequest) {
         return postService.writePost(postRequest);
     }
 

@@ -52,6 +52,7 @@ public class PostService {
         Post post = postRepository.getById(postId);
         post.setTitle(title);
         post.setContent(content);
+
         return postRepository.save(post);
     }
 }
