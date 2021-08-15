@@ -6,11 +6,17 @@ import com.fortune.demo.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PostService {
 
     @Autowired
     private PostRepository postRepository;
+
+    public List<Post> readAllPost(){
+        return postRepository.findAll();
+    }
 
     public Post readPost(Long postId) {
         return postRepository.findById(postId).orElseThrow(NullPointerException::new);
@@ -34,5 +40,18 @@ public class PostService {
             retstr = "Delete : " + postId;
         }
         return retstr;
+    }
+
+    public Post updatePost(Long postId, PostRequest postRequest) {
+        String title = postRequest.getTitle();
+        String content = postRequest.getContent();
+
+        if (!postRepository.existsById(postId))
+            return writePost(postRequest);
+
+        Post post = postRepository.getById(postId);
+        post.setTitle(title);
+        post.setContent(content);
+        return postRepository.save(post);
     }
 }
