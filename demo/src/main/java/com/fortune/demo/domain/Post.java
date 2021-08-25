@@ -14,6 +14,10 @@ public class Post {
     @Column(length = 512)
     private String content;
 
+    public Long getId(){
+        return id;
+    }
+
     public String getTitle() {
         return title;
     }
