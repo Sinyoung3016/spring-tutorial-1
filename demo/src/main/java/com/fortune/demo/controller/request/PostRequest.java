@@ -1,12 +1,11 @@
 package com.fortune.demo.controller.request;
 
 public class PostRequest {
+
     private String title;
     private String content;
 
-    public String getTitle() {
-        return title;
-    }
+    public String getTitle() { return title; }
 
     public void setTitle(String title) {
         this.title = title;
