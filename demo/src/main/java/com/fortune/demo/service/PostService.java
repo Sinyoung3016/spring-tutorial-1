@@ -33,21 +33,23 @@ public class PostService {
         return postRepository.save(post);
     }
 
-    public String deletePost(Long postId) {
-        String retstr = "Delete Fail";
-        if (postRepository.existsById(postId)) {
+    public void deletePost(Long postId) {
+        try {
             postRepository.deleteById(postId);
-            retstr = "Delete : " + postId;
+        } catch(IllegalArgumentException e){
+            System.out.println("deletePost : " + e);
         }
-        return retstr;
     }
 
     public Post updatePost(Long postId, PostRequest postRequest) {
         String title = postRequest.getTitle();
         String content = postRequest.getContent();
 
-        if (!postRepository.existsById(postId))
-            return writePost(postRequest);
+        try {
+            postRepository.existsById(postId);
+        } catch(IllegalArgumentException e){
+            System.out.println("updatePost : " + e);
+        }
 
         Post post = postRepository.getById(postId);
         post.setTitle(title);

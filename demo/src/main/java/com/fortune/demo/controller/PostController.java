@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/")
 public class PostController {
     @Autowired
     private PostService postService;
 
-    @GetMapping("post")
+    @GetMapping("posts")
     public List<Post> readAllPost(){
         return postService.readAllPost();
     }
@@ -22,13 +23,11 @@ public class PostController {
     @GetMapping("post/{id}")
     public Post readPost(@PathVariable Long id){ return postService.readPost(id); }
 
-    @PostMapping("write")
-    public Post writePost(@RequestBody PostRequest postRequest) {
-        return postService.writePost(postRequest);
-    }
+    @PostMapping("post")
+    public Post writePost(@RequestBody PostRequest postRequest) {return postService.writePost(postRequest); }
 
     @DeleteMapping("delete/{id}")
-    public String deletePost(@PathVariable Long id) { return postService.deletePost(id);}
+    public void deletePost(@PathVariable Long id) { postService.deletePost(id); }
 
     @PostMapping("update/{id}")
     public Post updatePost(@PathVariable Long id, @RequestBody PostRequest postRequest){return postService.updatePost(id, postRequest);}
