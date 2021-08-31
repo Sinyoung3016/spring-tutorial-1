@@ -6,6 +6,7 @@ interface PostRequest {
   title: string;
   content: string;
 }
+
 interface Props {
   mode: string;
   buttonTitle: string;
