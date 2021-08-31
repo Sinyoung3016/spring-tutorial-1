@@ -13,16 +13,18 @@ const Output = () => {
   const [posts, setPosts] = useState<PostResponse[]>();
 
   useEffect(() => {
-    async function getPosts() {
-      const posts = await axios.get('posts');
-      setPosts(posts.data);
-      console.log(posts);
-    }
     getPosts();
   }, []);
 
+  const getPosts = async () => {
+    const posts = await axios.get('posts');
+      setPosts(posts.data);
+      console.log(posts);
+  }
+
   const handleDelete = async (deleteId: number) => {
     const data = await axios.delete<String>('delete/'+deleteId);
+    getPosts();
     console.log(data);
   };
 
