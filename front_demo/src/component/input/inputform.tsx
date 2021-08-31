@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
 import axios from 'axios';
-import { useContactCardContext } from '../../context/PostContext';
+import { useState } from 'react';
 
 interface PostRequest {
   title: string;
@@ -13,31 +12,21 @@ interface Props {
 }
 
 const InputForm: React.FC<Props> = ({mode, buttonTitle, postId}) => {
-  const { getPosts }: any = useContactCardContext();
   const [request, setRequest] = useState<PostRequest>({
     title: '',
     content: '',
   });
   
-  const handleClick = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    //click and reload
-    e.preventDefault();
-
+  const handleClick = async () => {
     let data;
-    if (mode === "post") {
+    if (mode === "post")
       data = await axios.post<PostRequest>('post', request);
-      getPosts();
-    }
-    else if (mode === "update" && postId) {
-      data = await axios.post<PostRequest>('update/'+postId, request);
-      getPosts();
-    }
-    else {
-      data = "Nothing"
-    } 
-    console.log(data);
+    else if (mode === "update" && postId)
+      await axios.post<PostRequest>('update/'+postId, request);
+    else data = "Nothing"
+      console.log(data);
   };
-  
+
   const handleChange = (data: any) => {
     const id = data.target.id;
     const value = data.target.value;

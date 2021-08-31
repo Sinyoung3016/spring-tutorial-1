@@ -1,10 +1,26 @@
 
 import axios from 'axios';
+import { useState, useEffect } from 'react';
 import OutputPost from './outputPost'
-import { useContactCardContext, PostResponse } from '../../context/PostContext';
+
+interface PostResponse {
+  id: number;
+  title: string;
+  content: string;
+}
 
 const Output = () => {
-  const { posts, getPosts }: any = useContactCardContext();
+  const [posts, setPosts] = useState<PostResponse[]>();
+
+  useEffect(() => {
+    getPosts();
+  }, []);
+
+  const getPosts = async () => {
+    const posts = await axios.get('posts');
+      setPosts(posts.data);
+      console.log(posts);
+  }
 
   const handleDelete = async (deleteId: number) => {
     const data = await axios.delete<String>('delete/'+deleteId);
@@ -19,7 +35,7 @@ const Output = () => {
       height: "448px",
     }}>
       {posts ?
-        (posts.map((post: PostResponse) => {
+        (posts.map((post) => {
           return (<OutputPost key={post.id} post={post} handleDelete={handleDelete}/>)
         })) : "Nothing"
       }
