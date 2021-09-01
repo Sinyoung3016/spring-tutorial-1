@@ -18,7 +18,7 @@ const Output = () => {
       width: "500px",
       height: "448px",
     }}>
-      {posts ?
+      {posts.length !== 0 ?
         (posts.map((post: PostResponse) => {
           return (<OutputPost key={post.id} post={post} handleDelete={handleDelete}/>)
         })) : "Nothing"
