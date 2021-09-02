@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -41,6 +42,7 @@ class DemoApplicationTests extends AbstractTest {
 
 	@Test
 	void testUpdatePost() throws Exception {
+		testWritePost();
 		PostRequest postRequest = new PostRequest();
 		postRequest.setTitle("Update");
 		postRequest.setContent("Update");
@@ -52,6 +54,7 @@ class DemoApplicationTests extends AbstractTest {
 				.perform(post("/api/update/{id}", 1)
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(data))
+				.andDo(print())
 				.andExpect(status().is(HttpStatus.OK.value()))
 				.andExpect(jsonPath("$.title").value("Update"));
 	}
@@ -61,8 +64,7 @@ class DemoApplicationTests extends AbstractTest {
 		testWritePost();
 		this.mockMvc
 				.perform(delete("/api/delete/{id}",1))
-				.andExpect(status().is(HttpStatus.OK.value()))
-				.andExpect(content().string("Delete : 1"));
+				.andExpect(status().is(HttpStatus.OK.value()));
 	}
 
 	@Test
@@ -71,6 +73,6 @@ class DemoApplicationTests extends AbstractTest {
 		this.mockMvc
 				.perform(delete("/api/delete/{id}",-1))
 				.andExpect(status().is(HttpStatus.OK.value()))
-				.andExpect(content().string("Delete Fail"));
+				.andExpect(content().string("No class com.fortune.demo.domain.Post entity with id -1 exists!"));
 	}
 }
