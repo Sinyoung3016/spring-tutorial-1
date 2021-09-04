@@ -1,25 +1,46 @@
 package com.fortune.demo.exception;
 
-import org.springframework.dao.EmptyResultDataAccessException;
+import com.fortune.demo.domain.exceptionType.BaseExceptionType;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 
-@RestControllerAdvice
+@ControllerAdvice
 public class ExceptionResolver {
 
-    @ExceptionHandler(NullPointerException.class)
-    public String NullException(Exception e){
-        return e.getMessage();
+    @ExceptionHandler(PostException.class)
+    public ResponseEntity<Error> handlePostException(PostException e){
+        return new ResponseEntity<>(Error.create(e.getExceptionType()), HttpStatus.OK);
     }
 
-    @ExceptionHandler(EmptyResultDataAccessException.class)
-    public String EmptyException(Exception e){
-        return e.getMessage();
-    }
+    static class Error{
+        private int code;
+        private int status;
+        private String message;
 
-    @ExceptionHandler(Exception.class)
-    public String handleException(Exception e){
-        return e.getMessage();
-    }
+        public Error(int code, int status, String message){
+            this.code = code;
+            this.status = status;
+            this.message = message;
+        }
 
+        static Error create(BaseExceptionType exceptionType){
+            return new Error(exceptionType.getErrorCode(), exceptionType.getHttpStatus(), exceptionType.getErrorMessage());
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public int getStatus() {
+            return status;
+        }
+
+        public int getCode() {
+            return code;
+        }
+    }
 }
+
+

@@ -5,7 +5,6 @@ import com.fortune.demo.domain.Post;
 import com.fortune.demo.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -30,7 +29,6 @@ public class PostController {
     public void deletePost(@PathVariable Long id) { postService.deletePost(id); }
 
     @PostMapping("update/{id}")
-    public Post updatePost(@PathVariable Long id, @RequestBody PostRequest postRequest){return postService.updatePost(id, postRequest);}
-
+    public Post updatePost(@PathVariable Long id, @RequestBody PostRequest postRequest) {return postService.updatePost(id, postRequest);}
 }
 
